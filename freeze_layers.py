@@ -17,3 +17,5 @@ def freeze_layers(model, class_names, device):
             bias=True
         )
     ).to(device)
+
+    return model

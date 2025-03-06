@@ -92,3 +92,5 @@ def train_model(model, learning_rate, epoch_number, train_dataloader, test_datal
             total_time = train_time_end - train_time_start
 
             print(f"Total Time: {total_time}")
+
+    return results, total_time
