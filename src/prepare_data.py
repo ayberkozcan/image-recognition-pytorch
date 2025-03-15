@@ -1,27 +1,26 @@
 import os
-
-from torchvision import datasets, transforms
+from torchvision import transforms, datasets
 from torch.utils.data import DataLoader
 
 def prepare_data(train_dir, test_dir):
     transform = transforms.Compose([
-        transforms.Resize((423, 640)),
+        transforms.Resize((224, 224)),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
     train_data = datasets.OxfordIIITPet(
-        train_dir,
+        root=train_dir,
         split="trainval",
-        transform=transform,
-        download=True
+        download=True,
+        transform=transform
     )
 
     test_data = datasets.OxfordIIITPet(
-        test_dir,
+        root=test_dir,
         split="test",
-        transform=transform,
-        download=True
+        download=True,
+        transform=transform
     )
 
     print("\n[INFO] Dataset is ready\n")
@@ -32,15 +31,15 @@ def prepare_data(train_dir, test_dir):
         train_data,
         batch_size=32,
         shuffle=True,
-        num_workers=1,
+        num_workers=2,
     )
     test_dataloader = DataLoader(
         test_data,
         batch_size=32,
         shuffle=False,
-        num_workers=1
+        num_workers=2
     )
-    
+
     print("\n[INFO] Dataloaders are ready\n")
 
     return train_dataloader, test_dataloader, class_names
